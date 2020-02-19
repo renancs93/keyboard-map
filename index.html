@@ -15,6 +15,16 @@
             width: 90%;
             height: 400px;
         }
+
+        .pontos {
+            background-color: orange;
+            font-weight: bold;
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 100%;
+            cursor: pointer;
+        }
     </style>
 
 </head>
@@ -22,30 +32,46 @@
 <body>
 
     <main id="corpo" style="text-align: -webkit-center;">
-
         <h1>KEYBOARD MAP</h1>
         <button onclick="reset();">Reset</button>
+        <button onclick="desfazer();">Undo</button>
         <div id="teclado" onclick="localClick(event)"></div>
-
         <div id="teclas"></div>
     </main>
 
     <script>
-
         var number = 0;
         var arrElem = [];
 
+        function desfazer() {
+            var ultimo = arrElem[arrElem.length -1].id;
+            var pai = document.querySelector("#corpo");
+            var item = document.querySelector('#'+ultimo);
+            item.parentNode.removeChild(item);
+            arrElem.pop();
+            number--;
+        }
+
         function reset() {
+            arrElem.forEach(el => el.remove());
             number = 0;
         }
 
+        // function reajustar(e) {
+
+        //     // x = e.pageX;
+        //     // y = e.pageY;
+
+        //     // el.style.left = x - 10 + 'px';
+        //     // el.style.top = y - 8 + 'px';
+
+        //     console.log("reajustando");
+        // }
+
         function localClick(e) {
-
-            console.log(e);
-
             var x, y;
-            x = e.clientX;
-            y = e.clientY;
+            x = e.pageX;
+            y = e.pageY;
 
             document.querySelector("#teclas").innerHTML = "X: " + x + " Y: " + y;
 
@@ -54,33 +80,18 @@
 
         function addElement(x, y) {
 
-            // var el = document.createElement("canvas");
-            // var ctx = el.getContext("2d");
-            // ctx.beginPath();
-            // ctx.arc(100, 75, 15, 0, 2 * Math.PI);
-            // ctx.stroke();
-
-            var el = document.createElement("div");
+            var el = document.createElement("span");
             el.innerHTML = (++number);
-            el.style.backgroundColor = "orange";
-            el.style.position = "absolute";
-            el.style.left = x-3 + 'px';
-            el.style.top = y-8 + 'px';
+            el.className = "pontos";
+            el.setAttribute('id', "ponto"+number);
+            el.style.left = x - 10 + 'px';
+            el.style.top = y - 8 + 'px';
 
             document.querySelector("#corpo").appendChild(el);
-            // document.querySelector("#corpo").appendChild(c);
-            console.log(arrElem);
+            arrElem.push(el);
 
+            //el.onclick = reajustar();
         }
-
-        // document.onmouseclick = function(e){
-
-        //     var x, y;
-        //     x = e.clientX;
-        //     y = e.clientY;
-
-        //     document.querySelector("#teclas").innerHTML = "X: "+x+ "Y: "+y;
-        // }
 
     </script>
 
