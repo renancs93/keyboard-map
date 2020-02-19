@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keyboard Map</title>
+
+    <style>
+        #teclado {
+            background-image: url('keyboard-mac.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 90%;
+            height: 400px;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <main id="corpo" style="text-align: -webkit-center;">
+
+        <h1>KEYBOARD MAP</h1>
+        <button onclick="reset();">Reset</button>
+        <div id="teclado" onclick="localClick(event)"></div>
+
+        <div id="teclas"></div>
+    </main>
+
+    <script>
+
+        var number = 0;
+        var arrElem = [];
+
+        function reset() {
+            number = 0;
+        }
+
+        function localClick(e) {
+
+            console.log(e);
+
+            var x, y;
+            x = e.clientX;
+            y = e.clientY;
+
+            document.querySelector("#teclas").innerHTML = "X: " + x + " Y: " + y;
+
+            addElement(x, y);
+        }
+
+        function addElement(x, y) {
+
+            // var el = document.createElement("canvas");
+            // var ctx = el.getContext("2d");
+            // ctx.beginPath();
+            // ctx.arc(100, 75, 15, 0, 2 * Math.PI);
+            // ctx.stroke();
+
+            var el = document.createElement("div");
+            el.innerHTML = (++number);
+            el.style.backgroundColor = "orange";
+            el.style.position = "absolute";
+            el.style.left = x-3 + 'px';
+            el.style.top = y-8 + 'px';
+
+            document.querySelector("#corpo").appendChild(el);
+            // document.querySelector("#corpo").appendChild(c);
+            console.log(arrElem);
+
+        }
+
+        // document.onmouseclick = function(e){
+
+        //     var x, y;
+        //     x = e.clientX;
+        //     y = e.clientY;
+
+        //     document.querySelector("#teclas").innerHTML = "X: "+x+ "Y: "+y;
+        // }
+
+    </script>
+
+</body>
+
+</html>
