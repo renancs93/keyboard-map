@@ -7,9 +7,10 @@
     <title>Keyboard Map</title>
 
     <style>
+
         #teclado {
-            background-image: url('keyboard-mac.jpg');
-            background-size: cover;
+            background-image: url('img/keyboard-mac.jpg');
+            background-size: 100% 100%;
             background-repeat: no-repeat;
             background-position: center;
             width: 90%;
@@ -33,20 +34,48 @@
 
     <main id="corpo" style="text-align: -webkit-center;">
         <h1>KEYBOARD MAP</h1>
-        <button onclick="reset();">Reset</button>
-        <button onclick="desfazer();">Undo</button>
-        <div id="teclado" onclick="localClick(event)"></div>
-        <div id="teclas"></div>
+        <div>
+            <h3>Tipo do Teclado</h3>
+            <input name="keyboardType" type="radio" value="0" onclick="trocaTeclado(this.value)" checked>Mac
+            <input name="keyboardType" type="radio" value="1" onclick="trocaTeclado(this.value)">Windows
+        </div>
+
+        <div style="margin: 25px;">
+            <button onclick="reset();">Reset</button>
+            <button onclick="desfazer();">Undo</button>
+        </div>
+
+        <div id="container">
+            <div id="teclado" onclick="localClick(event)"></div>
+        </div>
+        <!-- <div id="teclas"></div> -->
     </main>
 
     <script>
+
+        window.addEventListener('load', function(){
+            trocaTeclado(tecladoDefault);
+        });
+
+        var tecladoDefault = 0;
         var number = 0;
         var arrElem = [];
 
+        function trocaTeclado(valueTeclado) {
+
+            var teclado = document.querySelector("#teclado");
+            if(valueTeclado == 0)
+                teclado.style.backgroundImage = "url('img/keyboard-mac.jpg')";
+            else
+                teclado.style.backgroundImage = "url('img/keyboard-win.png')";
+            
+            reset();
+        }
+
         function desfazer() {
-            var ultimo = arrElem[arrElem.length -1].id;
+            var ultimo = arrElem[arrElem.length - 1].id;
             var pai = document.querySelector("#corpo");
-            var item = document.querySelector('#'+ultimo);
+            var item = document.querySelector('#' + ultimo);
             item.parentNode.removeChild(item);
             arrElem.pop();
             number--;
@@ -73,7 +102,7 @@
             x = e.pageX;
             y = e.pageY;
 
-            document.querySelector("#teclas").innerHTML = "X: " + x + " Y: " + y;
+            //document.querySelector("#teclas").innerHTML = "X: " + x + " Y: " + y;
 
             addElement(x, y);
         }
@@ -83,7 +112,7 @@
             var el = document.createElement("span");
             el.innerHTML = (++number);
             el.className = "pontos";
-            el.setAttribute('id', "ponto"+number);
+            el.setAttribute('id', "ponto" + number);
             el.style.left = x - 10 + 'px';
             el.style.top = y - 8 + 'px';
 
