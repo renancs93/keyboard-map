@@ -6,12 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Keyboard Map</title>
 
-    <style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/css/index.css">
+    <link rel="stylesheet" href="src/css/index.css" />
 
-        *{
+    <style>
+        * {
             font-family: 'Courier New', Courier, monospace;
         }
-
+        
         #teclado {
             background-image: url('img/keyboard-mac.jpg');
             background-size: 100% 100%;
@@ -20,7 +22,7 @@
             width: 90%;
             height: 450px;
         }
-
+        
         .pontos {
             background-color: orange;
             font-weight: bold;
@@ -30,6 +32,10 @@
             border-radius: 100%;
             cursor: pointer;
         }
+        
+        .virtual-keyboard {
+            width: 90%;
+        }
     </style>
 
 </head>
@@ -38,6 +44,27 @@
 
     <main id="corpo" style="text-align: -webkit-center;">
         <h1>KEYBOARD MAP</h1>
+
+        <div class="virtual-keyboard">
+            <button onclick="reset();">Reset</button>
+            <input class="input" placeholder="Digite algo para começar" style="height: 50px; width: 99%;" />
+            <div class="keyboardContainer">
+                <div class="simple-keyboard-main"></div>
+
+                <div class="controlArrows">
+                    <div class="simple-keyboard-control"></div>
+                    <div class="simple-keyboard-arrows"></div>
+                </div>
+
+                <div class="numPad">
+                    <div class="simple-keyboard-numpad"></div>
+                    <div class="simple-keyboard-numpadEnd"></div>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
         <div>
             <h3>Tipo do Teclado</h3>
             <input name="keyboardType" type="radio" value="0" onclick="trocaTeclado(this.value)" checked>Mac
@@ -45,7 +72,6 @@
         </div>
 
         <div style="margin: 25px;">
-            <button onclick="reset();">Reset</button>
             <button onclick="desfazer();">Undo</button>
         </div>
 
@@ -55,9 +81,11 @@
         <!-- <div id="teclas"></div> -->
     </main>
 
-    <script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-keyboard@latest/build/index.min.js"></script>
+    <script src="src/js/index.js"></script>
 
-        window.addEventListener('load', function(){
+    <script>
+        window.addEventListener('load', function() {
             trocaTeclado(tecladoDefault);
         });
 
@@ -68,26 +96,36 @@
         function trocaTeclado(valueTeclado) {
 
             var teclado = document.querySelector("#teclado");
-            if(valueTeclado == 0)
+            if (valueTeclado == 0)
                 teclado.style.backgroundImage = "url('img/keyboard-mac.jpg')";
             else
                 teclado.style.backgroundImage = "url('img/keyboard-win.png')";
-            
+
             reset();
         }
 
         function desfazer() {
-            var ultimo = arrElem[arrElem.length - 1].id;
-            var pai = document.querySelector("#corpo");
-            var item = document.querySelector('#' + ultimo);
-            item.parentNode.removeChild(item);
-            arrElem.pop();
-            number--;
+            if (arrElem.length > 0) {
+                var ultimo = arrElem[arrElem.length - 1].id;
+                //var pai = document.querySelector("#corpo");
+                var item = document.querySelector('#' + ultimo);
+                item.parentNode.removeChild(item);
+                arrElem.pop()
+                number--;
+            }
         }
 
         function reset() {
+            //Remove todos os elementos do teclado estatico
             arrElem.forEach(el => el.remove());
             number = 0;
+
+            //Apaga o texto exibido no digitavel
+            let digitavel = document.querySelector(".input").value = "";
+
+            // Apaga as teclas ativas
+            let teclasAtivas = document.querySelectorAll(".teclaActive");
+            teclasAtivas.forEach(el => el.classList.toggle('teclaActive'));
         }
 
         // function reajustar(e) {
@@ -125,7 +163,6 @@
 
             //el.onclick = reajustar();
         }
-
     </script>
 
 </body>
