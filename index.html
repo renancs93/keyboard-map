@@ -14,6 +14,12 @@
             font-family: 'Courier New', Courier, monospace;
         }
         
+        #corpo {
+            text-align: center;
+            text-align: -moz-center;
+            text-align: -webkit-center;
+        }
+
         #teclado {
             background-image: url('img/keyboard-mac.jpg');
             background-size: 100% 100%;
@@ -36,13 +42,41 @@
         .virtual-keyboard {
             width: 90%;
         }
+
+
+        .scrollbarCustom::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbarCustom::-webkit-scrollbar-thumb {
+            border-radius: 25px;
+            background-color: #aaa;
+        }
+
+        .scrollbarCustom::-moz-scrollbar {
+            width: 8px;
+        }
+
+        .scrollbarCustom::-moz-scrollbar-thumb {
+            -webkit-border-radius: 10px;
+            border-radius: 10px;
+            background: rgba(255,0,0); 
+        }
+
+        /* .scrollbarCustom {
+            overflow-y: scroll;
+            scrollbar-color: #aaa;
+            scrollbar-width: 8px;
+        } */
+        
+
     </style>
 
 </head>
 
-<body>
+<body class="scrollbarCustom">
 
-    <main id="corpo" style="text-align: -webkit-center;">
+    <main id="corpo">
         <h1>KEYBOARD MAP</h1>
 
         <div class="virtual-keyboard">
@@ -67,8 +101,8 @@
 
         <div>
             <h3>Tipo do Teclado</h3>
-            <input name="keyboardType" type="radio" value="0" onclick="trocaTeclado(this.value)" checked>Mac
-            <input name="keyboardType" type="radio" value="1" onclick="trocaTeclado(this.value)">Windows
+            <input name="keyboardType" id="rbTpMac" type="radio" value="0" onclick="trocaTeclado(this.value)" checked><label for="rbTpMac">Mac</label> 
+            <input name="keyboardType" id="rbTpWin" type="radio" value="1" onclick="trocaTeclado(this.value)"><label for="rbTpWin">Windows</label> 
         </div>
 
         <div style="margin: 25px;">
